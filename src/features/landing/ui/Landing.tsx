@@ -1,10 +1,7 @@
+import { Link } from 'react-router-dom'
 import './landing.css'
 
-type LandingProps = {
-  onTestClick: () => void
-}
-
-export default function Landing({ onTestClick }: LandingProps) {
+export default function Landing() {
   return (
     <main className="landing">
       <div className="landing__container">
@@ -20,9 +17,9 @@ export default function Landing({ onTestClick }: LandingProps) {
             <a className="button button_primary" href="#contact">
               Request demo
             </a>
-            <button className="button button_secondary" type="button" onClick={onTestClick}>
+            <Link className="button button_secondary" to="/test">
               Test
-            </button>
+            </Link>
             <a className="button button_outline" href="#how">
               How it works
             </a>

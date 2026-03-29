@@ -1,10 +1,7 @@
+import { Link } from 'react-router-dom'
 import './landing.css'
 
-type TestFormProps = {
-  onBack: () => void
-}
-
-export default function TestForm({ onBack }: TestFormProps) {
+export default function TestForm() {
   return (
     <main className="landing">
       <div className="landing__container">
@@ -51,9 +48,9 @@ export default function TestForm({ onBack }: TestFormProps) {
             <button className="button button_primary" type="button">
               Submit request
             </button>
-            <button className="button button_secondary" type="button" onClick={onBack}>
+            <Link className="button button_secondary" to="/">
               Back to landing
-            </button>
+            </Link>
           </div>
         </section>
       </div>
