@@ -1,73 +1,117 @@
-# React + TypeScript + Vite
+# DevRank (SmartHire AI MVP)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DevRank is an MVP of an AI-assisted recruiter tool that analyzes candidate CV + GitHub profile and returns objective scoring metrics for HR triage.
 
-Currently, two official plugins are available:
+## MVP outcome
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Current implementation supports:
 
-## React Compiler
+- upload candidate CV (text or PDF)
+- optional GitHub URL input
+- background analysis flow
+- candidate list with sorting
+- candidate details page with key scores
+- final scoring with confidence penalty when GitHub is missing
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Core value: the system separates strong candidates from generic or "inflated" CVs using `Trust Score`, `CV Quality`, and GitHub-based metrics.
 
-## Expanding the ESLint configuration
+## Architecture (LLM-agnostic)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Backend is organized by layers:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `app/api` - HTTP endpoints (FastAPI)
+- `app/services` - business logic (`cv_service`, `github_service`, `analysis_service`, `scoring_service`)
+- `app/llm` - provider abstraction and adapters
+- `app/core/llm_factory.py` - provider selection by config (`LLM_PROVIDER`)
+- `app/db` - SQLAlchemy models/session
+- `app/schemas` - pydantic schemas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+LLM integration is provider-based:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `GeminiProvider`
+- `OpenAIProvider`
+- `MockProvider` fallback (used when API keys are absent, so MVP still works end-to-end)
+
+## API endpoints
+
+- `POST /api/candidates/upload`
+- `GET /api/candidates/`
+- `GET /api/candidates/{id}`
+- `GET /`
+
+## Verified test/build status
+
+Latest local checks:
+
+- backend tests: `11 passed`
+- frontend lint: `passed`
+- frontend build: `passed`
+- API smoke flow: `passed`
+
+Smoke flow validated:
+
+1. upload candidate
+2. wait for background analysis
+3. retrieve list/details with computed scores
+
+Observed behavior:
+
+- strong CV + active GitHub -> high final score
+- no GitHub -> lower final score via confidence factor
+- generic CV -> lower trust score
+
+## Run locally
+
+### 1) Backend
+
+```bash
+cd backend
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+If `asyncpg`/`psycopg2` build fails on your Python version, use this MVP-compatible install:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+.venv/bin/python -m pip install fastapi==0.115.0 uvicorn==0.30.6 sqlalchemy==2.0.35 pydantic==2.9.2 pydantic-settings==2.5.2 alembic==1.13.3 httpx==0.27.2 pytest==8.3.3 pytest-asyncio==0.24.0 google-genai==0.3.0 openai==1.50.0 PyPDF2==3.0.1 python-multipart==0.0.12 aiosqlite==0.20.0 greenlet
 ```
+
+Run API:
+
+```bash
+PYTHONPATH=. .venv/bin/python -m uvicorn app.main:app --reload
+```
+
+Run backend tests:
+
+```bash
+PYTHONPATH=. .venv/bin/python -m pytest -q
+```
+
+### 2) Frontend
+
+```bash
+npm install
+npm run lint
+npm run build
+npm run dev
+```
+
+## Environment variables
+
+Backend reads from `.env`:
+
+```env
+DB_URL=sqlite+aiosqlite:///./devrank.db
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=
+OPENAI_API_KEY=
+GITHUB_TOKEN=
+```
+
+## Known MVP gaps
+
+- no frontend e2e tests yet
+- `risks` are not fully rendered from backend structured output in details page
+- no production auth/roles/multi-user
+- no external recruiting source integrations (HH/LinkedIn/Enbek) in this MVP slice

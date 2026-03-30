@@ -1,9 +1,21 @@
 :root {
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --bg: #0b1220;
+  --bg-soft: #111a2d;
+  --panel: #111b31;
+  --panel-soft: #16223a;
+  --border: #263755;
+  --text: #e5eefc;
+  --text-muted: #94a6c7;
+  --brand: #6ea8ff;
+  --brand-strong: #4f90ff;
+  --success: #3ecf8e;
+  --warning: #f0b429;
+  --danger: #ef5f73;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   font-size: 16px;
-  line-height: 1.6;
-  color: #121318;
-  background: #f7f8fb;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -20,12 +32,13 @@ body,
 
 body {
   margin: 0;
-  background: #f7f8fb;
-  color: #fff;
+  color: var(--text);
+  background: radial-gradient(1200px 700px at 10% -10%, #1f3a67 0%, transparent 55%), var(--bg);
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 button,
@@ -35,6 +48,106 @@ select {
   font: inherit;
 }
 
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+.app-page {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.app-title {
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
+  color: #f3f7ff;
+}
+
+.app-subtitle {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.app-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.app-back:hover {
+  color: var(--text);
+}
+
+.app-card {
+  background: linear-gradient(180deg, var(--panel-soft), var(--panel));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.app-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.app-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #b7c7e6;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.app-input,
+.app-textarea {
+  width: 100%;
+  background: #0d1526;
+  color: var(--text);
+  border: 1px solid #2a3b59;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  outline: none;
+}
+
+.app-input:focus,
+.app-textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(110, 168, 255, 0.2);
+}
+
+.app-textarea {
+  resize: vertical;
+}
+
+.app-btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.app-btn-primary {
+  background: var(--brand);
+  color: #051024;
+}
+
+.app-btn-primary:hover {
+  background: var(--brand-strong);
+}
+
+.app-btn-secondary {
+  background: #162643;
+  color: var(--text);
+  border-color: #2a426d;
+}
+
+.app-btn-secondary:hover {
+  background: #1a2f50;
 }

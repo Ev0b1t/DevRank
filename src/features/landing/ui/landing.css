@@ -1,25 +1,19 @@
-:root {
-  color-scheme: dark;
-  background: #07090f;
-  color: #edf2f7;
-}
-
 .landing {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 64px 20px;
-  background: radial-gradient(circle at top, rgba(124, 58, 237, 0.12), transparent 40%), #07090f;
+  background: radial-gradient(circle at top, rgba(110, 168, 255, 0.2), transparent 45%);
 }
 
 .landing__container {
   width: min(1120px, 100%);
   padding: 56px;
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  border: 1px solid var(--border);
   border-radius: 32px;
-  background: rgba(10, 14, 24, 0.96);
-  box-shadow: 0 32px 80px rgba(3, 10, 23, 0.45);
+  background: color-mix(in srgb, var(--panel) 92%, #05090f);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
 }
 
 .hero {
@@ -34,7 +28,7 @@
   font-weight: 700;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: #8b95ab;
+  color: var(--text-muted);
 }
 
 .hero h1 {
@@ -42,7 +36,7 @@
   font-size: clamp(3rem, 4vw, 4.5rem);
   line-height: 0.95;
   letter-spacing: -0.06em;
-  color: #f8fafc;
+  color: #f3f7ff;
 }
 
 .hero__description {
@@ -50,7 +44,7 @@
   max-width: 720px;
   font-size: 1.07rem;
   line-height: 1.85;
-  color: #cbd5e1;
+  color: var(--text-muted);
 }
 
 .hero__actions {
@@ -77,15 +71,15 @@
 }
 
 .button_primary {
-  background: #101010;
-  color: #ffffff;
-  box-shadow: 0 16px 32px rgba(16, 24, 40, 0.12);
+  background: var(--brand);
+  color: #051024;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
 }
 
 .button_secondary {
-  background: rgba(148, 163, 184, 0.06);
-  color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: #162643;
+  color: var(--text);
+  border: 1px solid #2a426d;
 }
 
 .stats {
@@ -97,9 +91,9 @@
 
 .stats__item {
   padding: 28px 30px;
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--border);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .stats__value {
@@ -108,18 +102,18 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #e2e8f0;
+  color: #d7e5ff;
 }
 
 .stats__label {
   margin: 0;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.75;
 }
 
 .section {
   padding: 42px 0;
-  border-top: 1px solid rgba(148, 163, 184, 0.14);
+  border-top: 1px solid var(--border);
 }
 
 .split {
@@ -136,7 +130,7 @@
 
 .split p {
   margin: 0;
-  color: #cbd5e1;
+  color: var(--text-muted);
   line-height: 1.85;
 }
 
@@ -148,9 +142,9 @@
 
 .feature-card {
   padding: 30px;
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--border);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .feature-card h3 {
@@ -160,7 +154,7 @@
 
 .feature-card p {
   margin: 0;
-  color: #cbd5e1;
+  color: var(--text-muted);
   line-height: 1.8;
 }
 
@@ -176,20 +170,20 @@
   font-size: 0.85rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .section_cta h2 {
   margin: 0;
   font-size: 2rem;
   line-height: 1.1;
-  color: #f8fafc;
+  color: #f3f7ff;
 }
 
 .form-card {
   padding: 40px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
   border-radius: 28px;
   margin-top: 24px;
 }
@@ -212,7 +206,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .form-input,
@@ -221,9 +215,9 @@
   min-height: 48px;
   padding: 14px 16px;
   border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(255, 255, 255, 0.04);
-  color: #e2e8f0;
+  border: 1px solid #2a3b59;
+  background: #0d1526;
+  color: var(--text);
 }
 
 .form-textarea {
@@ -240,9 +234,9 @@
 }
 
 .button_outline {
-  background: rgba(148, 163, 184, 0.08);
-  color: #edf2f7;
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: #162643;
+  color: var(--text);
+  border: 1px solid #2a426d;
 }
 
 @media (max-width: 900px) {
