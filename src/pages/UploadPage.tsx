@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../api';
 import { Upload, Code, User, FileText, ArrowLeft } from 'lucide-react';
+import './upload.css';
 
 export default function UploadPage() {
   const [name, setName] = useState('');
@@ -18,18 +19,13 @@ export default function UploadPage() {
     try {
       const formData = new FormData();
       formData.append('name', name);
-      if (githubUrl.trim()) {
-        formData.append('github_url', githubUrl.trim());
-      }
-      if (vacancyDescription.trim()) {
-        formData.append('vacancy_description', vacancyDescription.trim());
-      }
+      if (githubUrl.trim()) formData.append('github_url', githubUrl.trim());
+      if (vacancyDescription.trim()) formData.append('vacancy_description', vacancyDescription.trim());
       if (cvFile) {
         formData.append('cv_file', cvFile);
       } else {
         formData.append('cv_text', cvText);
       }
-
       await api.upload(formData);
       navigate('/candidates');
     } catch {
@@ -40,96 +36,116 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="app-page">
-      <div className="app-container" style={{ maxWidth: 760 }}>
-        <Link to="/" className="app-back">
-          <ArrowLeft size={20} /> Back to Home
+    <main className="upload">
+      <div className="upload__container">
+
+        <Link to="/" className="upload__back">
+          <ArrowLeft size={16} /> Back to Home
         </Link>
-        
-        <header className="mb-12">
-          <h1 className="app-title">Analyze Candidate</h1>
-          <p className="app-subtitle">Provide candidate details and CV to start the AI-driven ranking process.</p>
+
+        <header className="upload__header">
+          <span className="upload__eyebrow">New Analysis</span>
+          <h1 className="upload__title">Analyze Candidate</h1>
+          <p className="upload__subtitle">
+            Provide candidate details and CV to start the AI-driven ranking process.
+          </p>
         </header>
 
-        <form onSubmit={handleSubmit} className="app-card space-y-8 p-8">
-          <div className="app-field">
-            <label className="app-label">
-              <User size={16} /> Full Name
-            </label>
-            <input
-              type="text"
-              required
-              className="app-input"
-              placeholder="John Doe"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+        <form onSubmit={handleSubmit} className="upload__form">
+
+          <div className="form-grid">
+            <div className="form-group">
+              <label className="form-label">
+                <User size={13} /> Full Name
+              </label>
+              <input
+                type="text"
+                required
+                className="form-input"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">
+                <Code size={13} /> GitHub URL
+              </label>
+              <input
+                type="url"
+                className="form-input"
+                placeholder="https://github.com/username"
+                value={githubUrl}
+                onChange={(e) => setGithubUrl(e.target.value)}
+              />
+            </div>
           </div>
 
-          <div className="app-field">
-            <label className="app-label">
-              <Code size={16} /> GitHub URL
-            </label>
-            <input
-              type="url"
-              className="app-input"
-              placeholder="https://github.com/username"
-              value={githubUrl}
-              onChange={(e) => setGithubUrl(e.target.value)}
-            />
-          </div>
-
-          <div className="app-field">
-            <label className="app-label">
-              <FileText size={16} /> Vacancy Description (optional)
+          <div className="form-group">
+            <label className="form-label">
+              <FileText size={13} /> Vacancy Description
+              <span className="form-label__opt">optional</span>
             </label>
             <textarea
-              className="app-textarea h-28"
+              className="form-textarea"
+              style={{ minHeight: 100 }}
               placeholder="Paste target role description to improve vacancy match scoring..."
               value={vacancyDescription}
               onChange={(e) => setVacancyDescription(e.target.value)}
             />
           </div>
 
-          <div className="app-field">
-            <label className="app-label">
-              <FileText size={16} /> CV Content
+          <div className="form-group">
+            <label className="form-label">
+              <FileText size={13} /> CV Content
             </label>
-            <div className="space-y-4">
-              <textarea
-                className="app-textarea h-40"
-                placeholder="Paste CV text here..."
-                value={cvText}
-                onChange={(e) => setCvText(e.target.value)}
-                disabled={!!cvFile}
-              />
-              <div className="flex items-center gap-4">
-                <span className="text-[var(--text-muted)] text-sm">OR</span>
-                <label className="app-btn app-btn-secondary cursor-pointer inline-flex items-center gap-2">
-                  <Upload size={16} /> {cvFile ? cvFile.name : 'Upload PDF'}
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    className="hidden"
-                    onChange={(e) => setCvFile(e.target.files?.[0] || null)}
-                  />
-                </label>
-                {cvFile && (
-                  <button type="button" onClick={() => setCvFile(null)} className="text-sm text-[var(--danger)]">Remove</button>
-                )}
-              </div>
+            <textarea
+              className="form-textarea"
+              style={{ minHeight: 140 }}
+              placeholder="Paste CV text here..."
+              value={cvText}
+              onChange={(e) => setCvText(e.target.value)}
+              disabled={!!cvFile}
+            />
+            <div className="upload__or">
+              <span className="upload__or-line" />
+              <span className="upload__or-text">or</span>
+              <span className="upload__or-line" />
+            </div>
+            <div className="upload__file-row">
+              <label className="button button_secondary upload__file-btn">
+                <Upload size={14} />
+                {cvFile ? cvFile.name : 'Upload PDF'}
+                <input
+                  type="file"
+                  accept=".pdf"
+                  className="upload__file-input"
+                  onChange={(e) => setCvFile(e.target.files?.[0] || null)}
+                />
+              </label>
+              {cvFile && (
+                <button
+                  type="button"
+                  onClick={() => setCvFile(null)}
+                  className="upload__remove"
+                >
+                  Remove
+                </button>
+              )}
             </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="app-btn app-btn-primary w-full py-4 disabled:opacity-60"
+            className="button button_primary upload__submit"
           >
-            {loading ? 'Processing...' : 'Run Analysis'}
+            {loading ? 'Processing…' : 'Run Analysis'}
           </button>
+
         </form>
       </div>
-    </div>
+    </main>
   );
 }
