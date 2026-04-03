@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { api } from '../api';
+import { api } from '../../api';
 import { Upload, Code, User, FileText, ArrowLeft } from 'lucide-react';
 import './upload.css';
 

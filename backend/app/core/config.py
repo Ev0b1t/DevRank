@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     DB_URL: str = "sqlite+aiosqlite:///./devrank.db"
 
     LLM_PROVIDER: str = "gemini"
-    GEMINI_API_KEY: str = ""
+    GEMINI_API_KEY: str = "AIzaSyDpkd5Z8ro-iNcXmNOrw0hkY8WHCg1wQoc"
     OPENAI_API_KEY: str = ""
     GITHUB_TOKEN: str = ""
     MAX_CV_CHARS: int = 8000

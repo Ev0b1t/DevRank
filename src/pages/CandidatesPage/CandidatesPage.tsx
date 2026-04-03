@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api';
-import type { Candidate } from '../api';
+import { api } from '../../api';
+import type { Candidate } from '../../api';
 import { ArrowRight, Code, ExternalLink, ShieldCheck } from 'lucide-react';
 import './candidates.css';
  
