@@ -3,7 +3,7 @@ import UploadPage from './pages/UploadPage/UploadPage'
 import CandidatesPage from './pages/CandidatesPage/CandidatesPage'
 import CandidateDetailsPage from './pages/CandidateDetailPage/CandidateDetailsPage'
 import './App.css'
-import Landing from './pages/Landing/Landing'
+import { Landing } from './pages/Landing/Landing'
 
 function App() {
   return (
