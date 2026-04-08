@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
+
 const heroVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -18,15 +19,25 @@ const heroVariants: Variants = {
 
 const cardVariants: Variants = {
   hidden: { opacity: 0, y: 16, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
 };
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
 };
 
 export const HeroContent = () => {
+
   return (
     <motion.section
       className="relative pt-40 pb-32 px-10 flex flex-col items-center text-center overflow-hidden"
@@ -43,11 +54,11 @@ export const HeroContent = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto">
         <motion.span
-          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-[rgba(91,156,246,0.08)] border border-[rgba(91,156,246,0.2)] text-xs font-semibold uppercase tracking-[0.18em] text-[#89b8fc]"
+          className="inline-flex items-center t gap-2 mb-8 px-4 py-1.5 rounded-full bg-[rgba(91,156,246,0.08)] border border-[rgba(91,156,246,0.2)] text-xs font-semibold uppercase tracking-[0.18em] text-[#89b8fc]"
           variants={itemVariants}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#5b9cf6] shadow-[0_0_8px_rgba(91,156,246,0.9)] animate-pulse" />
-          SmartHire AI — MVP
+          SmartHire AI
         </motion.span>
 
         <motion.h1
@@ -65,11 +76,14 @@ export const HeroContent = () => {
           variants={itemVariants}
         >
           AI assistant for HR teams that analyzes CV&nbsp;+&nbsp;GitHub and
-          ranks candidates by objective technical signals — trust, code
-          quality, activity, and vacancy match.
+          ranks candidates by objective technical signals — trust, code quality,
+          activity, and vacancy match.
         </motion.p>
 
-        <motion.div className="flex flex-wrap gap-3 justify-center" variants={itemVariants}>
+        <motion.div
+          className="flex flex-wrap gap-3 justify-center"
+          variants={itemVariants}
+        >
           <motion.a
             className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-semibold text-base transition-all duration-200 bg-blue-500 text-slate-900 hover:bg-blue-400 shadow-[0_8px_32px_rgba(91,156,246,0.35)] hover:shadow-[0_12px_40px_rgba(91,156,246,0.5)]"
             href="#contact"
@@ -112,12 +126,30 @@ export const HeroContent = () => {
         {/* Score cards row */}
         <motion.div
           className="flex gap-4 mt-20 flex-wrap justify-center"
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08 } },
+          }}
         >
           {[
-            { label: "Trust Score", sub: "CV credibility", val: 82, color: "from-[#3a7bd5] to-[#5b9cf6]" },
-            { label: "GitHub Score", sub: "Code activity", val: 74, color: "from-[#7b4fd8] to-[#a57bf8]" },
-            { label: "Final Score", sub: "Overall rank", val: 91, color: "from-[#1d9e75] to-[#5dcaa5]" },
+            {
+              label: "Trust Score",
+              sub: "CV credibility",
+              val: 82,
+              color: "from-[#3a7bd5] to-[#5b9cf6]",
+            },
+            {
+              label: "GitHub Score",
+              sub: "Code activity",
+              val: 74,
+              color: "from-[#7b4fd8] to-[#a57bf8]",
+            },
+            {
+              label: "Final Score",
+              sub: "Overall rank",
+              val: 91,
+              color: "from-[#1d9e75] to-[#5dcaa5]",
+            },
           ].map(({ label, sub, val, color }) => (
             <motion.div
               key={label}
@@ -130,7 +162,9 @@ export const HeroContent = () => {
               </p>
               <div className="flex items-end justify-between mb-2">
                 <span className="text-xs text-slate-500">{sub}</span>
-                <span className="font-display text-3xl font-bold text-white">{val}</span>
+                <span className="font-display text-3xl font-bold text-white">
+                  {val}
+                </span>
               </div>
               <div className="h-1.5 bg-white/6 rounded-full overflow-hidden">
                 <div
