@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
-import { fadeUp, fadeUpStagger, Section } from "../../shared/Animations";
+import { fadeUp, fadeUpStagger, Section } from "@/src/shared/Animations";
+import { FeaturesData } from "../model/FeaturesData";
 
 export const Features = () => {
   return (
-    <Section className="py-24 px-10 border-t border-white/6">
+    <Section id="features" className="py-24 px-10 border-t border-white/6">
       <div className="max-w-6xl mx-auto">
         <motion.p
           className="text-xs font-bold uppercase tracking-[0.22em] text-blue-400 mb-4 text-center"
@@ -19,23 +20,7 @@ export const Features = () => {
         </motion.h2>
 
         <motion.div className="grid grid-cols-3 gap-5" variants={fadeUpStagger}>
-          {[
-            [
-              "🧠",
-              "Candidate profile intelligence",
-              "Summarizes strengths, risk signals, and confidence level in one card.",
-            ],
-            [
-              "⚙️",
-              "Objective technical signal",
-              "Uses GitHub metadata and activity to validate real-world experience.",
-            ],
-            [
-              "⚡",
-              "Faster hiring decisions",
-              "Compares candidates by score and opens details for quick shortlisting.",
-            ],
-          ].map(([icon, title, desc]) => (
+          {FeaturesData.map(([icon, title, desc]) => (
             <motion.article
               key={title as string}
               className="p-8 border border-white/6 rounded-2xl bg-white/1.5 cursor-default"

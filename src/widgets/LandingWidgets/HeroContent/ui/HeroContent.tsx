@@ -1,51 +1,20 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
-
-
-const heroVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: "easeOut",
-      when: "beforeChildren",
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 16, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.45, ease: "easeOut" },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: "easeOut" },
-  },
-};
+import {
+  cardVariants,
+  HeroCards,
+  heroVariants,
+  itemVariants,
+} from "../model/HeroData";
 
 export const HeroContent = () => {
-
   return (
     <motion.section
-      className="relative pt-40 pb-32 px-10 flex flex-col items-center text-center overflow-hidden"
+      className="relative flex flex-col items-center px-10 pt-40 pb-32 overflow-hidden text-center"
       initial="hidden"
       animate="visible"
       variants={heroVariants}
     >
-      {/* background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-225 h-125 bg-[radial-gradient(ellipse_at_top,rgba(91,156,246,0.18)_0%,transparent_65%)]" />
         <div className="absolute top-1/3 left-1/4 w-100 h-100 bg-[radial-gradient(circle,rgba(120,80,220,0.08)_0%,transparent_70%)]" />
@@ -75,13 +44,13 @@ export const HeroContent = () => {
           className="text-xl leading-[1.75] text-[#8eaad8] font-light max-w-2xl mx-auto mb-12"
           variants={itemVariants}
         >
-          AI assistant for HR teams that analyzes CV&nbsp;+&nbsp;GitHub and
-          ranks candidates by objective technical signals — trust, code quality,
+          AI assistant for HR teams that analyzes CV + GitHub and ranks
+          candidates by objective technical signals - trust, code quality,
           activity, and vacancy match.
         </motion.p>
 
         <motion.div
-          className="flex flex-wrap gap-3 justify-center"
+          className="flex flex-wrap justify-center gap-3"
           variants={itemVariants}
         >
           <motion.a
@@ -101,7 +70,7 @@ export const HeroContent = () => {
             transition={{ type: "spring", stiffness: 240, damping: 20 }}
           >
             <Link
-              className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-medium text-base bg-white/5 text-slate-100 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+              className="inline-flex items-center justify-center px-8 text-base font-medium no-underline transition-all duration-200 border h-13 rounded-2xl bg-white/5 text-slate-100 border-white/10 hover:bg-white/10 hover:border-white/20"
               to="/candidates"
             >
               Dashboard
@@ -115,7 +84,7 @@ export const HeroContent = () => {
             transition={{ type: "spring", stiffness: 240, damping: 20 }}
           >
             <Link
-              className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-medium text-base text-slate-400 border border-slate-700 hover:text-slate-200 hover:border-slate-500 transition-all duration-200"
+              className="inline-flex items-center justify-center px-8 text-base font-medium no-underline transition-all duration-200 border h-13 rounded-2xl text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"
               to="/upload"
             >
               Analyze CV
@@ -123,37 +92,17 @@ export const HeroContent = () => {
           </motion.div>
         </motion.div>
 
-        {/* Score cards row */}
         <motion.div
-          className="flex gap-4 mt-20 flex-wrap justify-center"
+          className="flex flex-wrap justify-center gap-4 mt-20"
           variants={{
             hidden: {},
             visible: { transition: { staggerChildren: 0.08 } },
           }}
         >
-          {[
-            {
-              label: "Trust Score",
-              sub: "CV credibility",
-              val: 82,
-              color: "from-[#3a7bd5] to-[#5b9cf6]",
-            },
-            {
-              label: "GitHub Score",
-              sub: "Code activity",
-              val: 74,
-              color: "from-[#7b4fd8] to-[#a57bf8]",
-            },
-            {
-              label: "Final Score",
-              sub: "Overall rank",
-              val: 91,
-              color: "from-[#1d9e75] to-[#5dcaa5]",
-            },
-          ].map(({ label, sub, val, color }) => (
+          {HeroCards.map(({ label, sub, val, color }) => (
             <motion.div
               key={label}
-              className="w-56 p-5 rounded-2xl border border-white/8 bg-white/3 backdrop-blur-sm"
+              className="w-56 p-5 border rounded-2xl border-white/8 bg-white/3 backdrop-blur-sm"
               variants={cardVariants}
               whileHover={{ y: -4, scale: 1.01 }}
             >
@@ -162,7 +111,7 @@ export const HeroContent = () => {
               </p>
               <div className="flex items-end justify-between mb-2">
                 <span className="text-xs text-slate-500">{sub}</span>
-                <span className="font-display text-3xl font-bold text-white">
+                <span className="text-3xl font-bold text-white font-display">
                   {val}
                 </span>
               </div>

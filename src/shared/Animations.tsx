@@ -25,11 +25,12 @@ export const lineReveal: Variants = {
   visible: { scaleX: 1, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
     <motion.div
+      id={id}
       ref={ref}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}

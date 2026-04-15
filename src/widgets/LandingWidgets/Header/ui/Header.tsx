@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { navItems, navItemVariants } from "../model/HeaderData";
 
 export const Header = () => {
   return (
@@ -26,26 +27,20 @@ export const Header = () => {
             },
           }}
         >
-          {["#how", "#features"].map((href, i) => (
+          {navItems.map(({ href, label }) => (
             <motion.a
               key={href}
               href={href}
               className="text-sm text-slate-400 hover:text-white transition-colors"
-              variants={{
-                hidden: { opacity: 0, y: -8 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-              }}
+              variants={navItemVariants}
             >
-              {i === 0 ? "How it works" : "Features"}
+              {label}
             </motion.a>
           ))}
           <motion.a
             href="#contact"
             className="inline-flex items-center h-9 px-5 rounded-xl bg-blue-500/10 border border-blue-500/25 text-blue-300 text-sm font-medium hover:bg-blue-500/20 hover:border-blue-500/40 transition-all"
-            variants={{
-              hidden: { opacity: 0, y: -8 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-            }}
+            variants={navItemVariants}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >

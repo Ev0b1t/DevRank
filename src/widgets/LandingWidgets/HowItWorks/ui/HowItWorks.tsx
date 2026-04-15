@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
-import { fadeUp, fadeUpStagger, Section } from "../../shared/Animations";
+import { fadeUp, fadeUpStagger, Section } from "@/src/shared/Animations";
+import { HowItWorksData } from "../model/HowItWorkdsData";
 
 export const HowItWorks = () => {
   return (
-    <Section className="py-24 px-10 border-t border-white/6">
+    <Section id="how" className="px-10 py-24 border-t border-white/6">
       <div className="max-w-6xl mx-auto">
         <motion.p
           className="text-xs font-bold uppercase tracking-[0.22em] text-blue-400 mb-4 text-center"
@@ -19,26 +20,10 @@ export const HowItWorks = () => {
         </motion.h2>
 
         <motion.div
-          className="grid grid-cols-3 gap-px bg-white/6 rounded-3xl overflow-hidden"
+          className="grid grid-cols-3 gap-px overflow-hidden bg-white/6 rounded-3xl"
           variants={fadeUpStagger}
         >
-          {[
-            [
-              "01",
-              "Upload",
-              "HR uploads a CV and adds an optional GitHub URL to start analysis.",
-            ],
-            [
-              "02",
-              "Analyze",
-              "The system runs CV + GitHub scoring in the background with structured parsing and fallback logic.",
-            ],
-            [
-              "03",
-              "Rank",
-              "Returns ranked candidates with clear, auditable metrics and confidence scores.",
-            ],
-          ].map(([num, title, desc]) => (
+          {HowItWorksData.map(([num, title, desc]) => (
             <motion.div
               key={num}
               className="p-10 bg-[#060e1e] transition-colors cursor-default"
@@ -46,17 +31,17 @@ export const HowItWorks = () => {
               whileHover={{ backgroundColor: "rgba(14,22,46,0.98)" }}
             >
               <motion.span
-                className="font-display text-6xl font-extrabold text-white/6 leading-none block mb-6"
+                className="block mb-6 text-6xl font-extrabold leading-none font-display text-white/6"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
               >
                 {num}
               </motion.span>
-              <h3 className="font-display text-xl font-bold text-white mb-3">
+              <h3 className="mb-3 text-xl font-bold text-white font-display">
                 {title}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed font-light">
+              <p className="text-sm font-light leading-relaxed text-slate-400">
                 {desc}
               </p>
             </motion.div>

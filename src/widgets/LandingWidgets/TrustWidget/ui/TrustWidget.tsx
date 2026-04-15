@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
-import { fadeUp, fadeUpStagger, Section } from "../../shared/Animations";
+import { fadeUp, fadeUpStagger, Section } from "@/src/shared/Animations";
+import { TrustData } from "../model/TrustData";
 
 export const TrustWidget = () => {
   return (
-    <Section className="py-24 px-10 text-center">
+    <Section className="px-10 py-24 text-center">
       <div className="max-w-5xl mx-auto">
         <motion.p
           className="text-xs font-bold uppercase tracking-[0.22em] text-blue-400 mb-4"
@@ -18,17 +19,17 @@ export const TrustWidget = () => {
           Used where hiring decisions matter
         </motion.h2>
         <motion.p
-          className="text-lg text-slate-400 font-light leading-relaxed max-w-2xl mx-auto mb-12"
+          className="max-w-2xl mx-auto mb-12 text-lg font-light leading-relaxed text-slate-400"
           variants={fadeUp}
         >
           DevRank helps teams reduce manual CV screening by 80% and speed up
           shortlisting significantly.
         </motion.p>
         <motion.div
-          className="flex gap-3 flex-wrap justify-center"
+          className="flex flex-wrap justify-center gap-3"
           variants={fadeUpStagger}
         >
-          {["💼 FinTech", "🛠️ DevOps", "🌐 SaaS", "🏥 HealthTech"].map(
+          {TrustData.map(
             (tag) => (
               <motion.span
                 key={tag}

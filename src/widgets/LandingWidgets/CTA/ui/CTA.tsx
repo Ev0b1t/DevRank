@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
-import { fadeIn, fadeUp, lineReveal, Section } from "../../shared/Animations";
+import { fadeIn, fadeUp, lineReveal, Section } from "@/src/shared/Animations";
+import { MainButton } from "@/src/shared/ui/MainButton";
 
 export const CTA = () => {
   return (
-    <Section className="py-32 px-10 border-t border-white/6 relative overflow-hidden">
+    <Section id="contact" className="py-32 px-10 border-t border-white/6 relative overflow-hidden">
       <motion.div
         className="absolute inset-0 pointer-events-none"
         variants={fadeIn}
@@ -39,19 +40,8 @@ export const CTA = () => {
           decisions.
         </motion.p>
 
-        <motion.a
-          className="inline-flex items-center justify-center h-14 px-10 rounded-2xl no-underline font-bold text-base bg-blue-500 text-slate-900 hover:bg-blue-400 transition-colors duration-200 shadow-[0_8px_40px_rgba(91,156,246,0.4)]"
-          href="mailto:team@devrank.ai"
-          variants={fadeUp}
-          whileHover={{
-            y: -3,
-            boxShadow: "0 16px 48px rgba(91,156,246,0.55)",
-            transition: { duration: 0.2 },
-          }}
-          whileTap={{ scale: 0.97 }}
-        >
-          Get early access
-        </motion.a>
+        <MainButton text="Get early access"/>
+
       </div>
     </Section>
   );
