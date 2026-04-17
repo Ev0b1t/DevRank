@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ProtectedLink } from '@/src/shared/ui/ProtectedLink';
 import { api } from '../../api';
 import type { Candidate } from '../../api';
 import { ArrowRight, Code, ExternalLink, ShieldCheck } from 'lucide-react';
@@ -51,9 +51,9 @@ export default function CandidatesPage() {
               Ranked by AI score and repository evidence
             </p>
           </div>
-          <Link to="/upload" className="inline-flex items-center justify-center gap-1.5 min-h-11 px-5.5 rounded-full no-underline font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 bg-(--brand) text-[#051024] shadow-[0_16px_32px_rgba(0,0,0,0.22)]">
+          <ProtectedLink to="/upload" className="inline-flex items-center justify-center gap-1.5 min-h-11 px-5.5 rounded-full no-underline font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 bg-(--brand) text-[#051024] shadow-[0_16px_32px_rgba(0,0,0,0.22)]">
             + New Analysis
-          </Link>
+          </ProtectedLink>
         </header>
 
         <div className="flex items-center gap-2 mb-5">
@@ -104,9 +104,9 @@ export default function CandidatesPage() {
                 <tr>
                   <td colSpan={5} className="p-14 text-center text-(--text-muted) text-sm">
                     <span>No candidates analyzed yet.</span>
-                    <Link to="/upload" className="block mt-3 text-sm text-(--text-muted) no-underline hover:text-(--text) transition-colors">
+                    <ProtectedLink to="/upload" className="block mt-3 text-sm text-(--text-muted) no-underline hover:text-(--text) transition-colors">
                       Run your first analysis →
-                    </Link>
+                    </ProtectedLink>
                   </td>
                 </tr>
               ) : (
@@ -169,9 +169,9 @@ export default function CandidatesPage() {
                       </td>
 
                       <td className="p-[18px_24px] align-middle text-right">
-                        <Link to={`/candidates/${c.id}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-(--text-muted) no-underline transition-all hover:text-(--text) hover:gap-2">
+                        <ProtectedLink to={`/candidates/${c.id}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-(--text-muted) no-underline transition-all hover:text-(--text) hover:gap-2">
                           View details <ArrowRight size={13} />
-                        </Link>
+                        </ProtectedLink>
                       </td>
                     </tr>
                   );

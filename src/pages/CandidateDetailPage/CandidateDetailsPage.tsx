@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { ProtectedLink } from '@/src/shared/ui/ProtectedLink';
 import { api } from '../../api';
 import type { Candidate } from '../../api';
 import { ArrowLeft, Shield, Code, Activity, BarChart3, AlertTriangle } from 'lucide-react';
@@ -42,9 +43,9 @@ export default function CandidateDetailsPage() {
     <main className="min-h-screen flex items-start justify-center py-16 px-5 bg-gradient-radial from-blue-500/20 to-transparent">
       <div className="w-full max-w-4xl px-14 py-14 border border-slate-700 rounded-3xl bg-slate-900/50 shadow-2xl">
 
-        <Link to="/candidates" className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-slate-400 hover:text-slate-200 no-underline mb-10 transition-colors duration-200">
+        <ProtectedLink to="/candidates" className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-slate-400 hover:text-slate-200 no-underline mb-10 transition-colors duration-200">
           <ArrowLeft size={16} /> Back to Candidates
-        </Link>
+        </ProtectedLink>
 
         {/* Hero row */}
         <div className="flex justify-between items-start gap-8 mb-10 md:flex-col md:items-start">

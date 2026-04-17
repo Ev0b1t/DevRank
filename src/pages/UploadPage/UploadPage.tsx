@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../../api';
 import { Upload, Code, User, FileText, ArrowLeft } from 'lucide-react';
+import { useAuthStore } from '@/src/shared/store/authStore';
+import { AuthModal } from '@/src/shared/ui/AuthModal';
 
 export default function UploadPage() {
   const [name, setName] = useState('');
@@ -10,7 +12,9 @@ export default function UploadPage() {
   const [vacancyDescription, setVacancyDescription] = useState('');
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +30,10 @@ export default function UploadPage() {
         formData.append('cv_text', cvText);
       }
       await api.upload(formData);
+      if (!user) {
+        setAuthModalOpen(true);
+        return;
+      }
       navigate('/candidates');
     } catch {
       alert('Error uploading candidate');
@@ -144,6 +152,7 @@ export default function UploadPage() {
           </button>
 
         </form>
+        <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
       </div>
     </main>
   );

@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { signUp } from "@/src/shared/api/auth";
 
 export const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -8,15 +9,26 @@ export const RegistrationForm = () => {
     company: "",
     role: "",
   });
+  const [status, setStatus] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Registration data:", formData);
+    setStatus("Регистрация...");
+
+    const { data, error } = await signUp(formData.email, formData.password);
+    if (error) {
+      setStatus(`Ошибка регистрации: ${error.message}`);
+      console.error(error);
+      return;
+    }
+
+    setStatus("Пользователь успешно зарегистрирован. Проверьте почту для подтверждения.");
+    console.log("Registration data:", formData, data);
   };
 
   return (
@@ -107,6 +119,10 @@ export const RegistrationForm = () => {
             Create account
           </button>
         </div>
+
+        {status ? (
+          <p className="mt-2 text-sm text-slate-300">{status}</p>
+        ) : null}
       </form>
     </section>
   );

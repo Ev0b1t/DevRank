@@ -1,4 +1,3 @@
-import { AuthTest } from "@/src/widgets/LandingWidgets/RegistrationForm/ui/UserRegisterForm";
 import {
   Header,
   HeroContent,
@@ -22,7 +21,6 @@ export const Landing = () => {
       <Features />
       <CTA />
       <RegistrationForm />
-      <AuthTest/>
       <Footer />
     </div>
   );
