@@ -1,4 +1,4 @@
-import { ProtectedLink } from "@/src/shared/ui/ProtectedLink";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   cardVariants,
@@ -6,8 +6,15 @@ import {
   heroVariants,
   itemVariants,
 } from "../model/HeroData";
+import { RegistrationModal } from "@/src/shared/ui/RegistrationModal";
 
 export const HeroContent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
   return (
     <motion.section
       className="relative flex flex-col items-center px-10 pt-40 pb-32 overflow-hidden text-center"
@@ -53,43 +60,35 @@ export const HeroContent = () => {
           className="flex flex-wrap justify-center gap-3"
           variants={itemVariants}
         >
-          <motion.a
-            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-semibold text-base transition-all duration-200 bg-blue-500 text-slate-900 hover:bg-blue-400 shadow-[0_8px_32px_rgba(91,156,246,0.35)] hover:shadow-[0_12px_40px_rgba(91,156,246,0.5)]"
-            href="#contact"
+          <motion.button
+            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-semibold text-base transition-all duration-200 bg-blue-500 text-slate-900 hover:bg-blue-400 shadow-[0_8px_32px_rgba(91,156,246,0.35)] hover:shadow-[0_12px_40px_rgba(91,156,246,0.5)] border-none cursor-pointer"
+            onClick={handleButtonClick}
             whileHover={{ y: -2, scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
           >
             Request demo
-          </motion.a>
+          </motion.button>
 
-          <motion.div
-            className="inline-flex"
+          <motion.button
+            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl font-semibold text-base transition-all duration-200 border border-white/10 bg-white/5 text-slate-100 hover:bg-white/10 hover:border-white/20 cursor-pointer"
+            onClick={handleButtonClick}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 240, damping: 20 }}
           >
-            <ProtectedLink
-              className="inline-flex items-center justify-center px-8 text-base font-medium no-underline transition-all duration-200 border h-13 rounded-2xl bg-white/5 text-slate-100 border-white/10 hover:bg-white/10 hover:border-white/20"
-              to="/candidates"
-            >
-              Dashboard
-            </ProtectedLink>
-          </motion.div>
+            Dashboard
+          </motion.button>
 
-          <motion.div
-            className="inline-flex"
+          <motion.button
+            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl font-semibold text-base transition-all duration-200 border border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-500 cursor-pointer"
+            onClick={handleButtonClick}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 240, damping: 20 }}
           >
-            <ProtectedLink
-              className="inline-flex items-center justify-center px-8 text-base font-medium no-underline transition-all duration-200 border h-13 rounded-2xl text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"
-              to="/upload"
-            >
-              Analyze CV
-            </ProtectedLink>
-          </motion.div>
+            Analyze CV
+          </motion.button>
         </motion.div>
 
         <motion.div
@@ -125,6 +124,7 @@ export const HeroContent = () => {
           ))}
         </motion.div>
       </div>
+      <RegistrationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.section>
   );
 };

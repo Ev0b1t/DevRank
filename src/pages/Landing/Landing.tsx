@@ -6,7 +6,6 @@ import {
   HowItWorks,
   TrustWidget,
   CTA,
-  RegistrationForm,
   Footer,
 } from "../../widgets/LandingWidgets";
 
@@ -20,7 +19,6 @@ export const Landing = () => {
       <HowItWorks />
       <Features />
       <CTA />
-      <RegistrationForm />
       <Footer />
     </div>
   );

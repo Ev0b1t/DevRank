@@ -32,98 +32,115 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <section className="rounded-4xl border border-white/10 bg-slate-950/95 p-8 shadow-[0_32px_80px_rgba(0,0,0,0.35)] ring-1 ring-white/10 backdrop-blur-xl">
-      <div className="mb-10 max-w-3xl">
-        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-[#89b8fc]">
-          Register with DevRank
-        </span>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+    <div className="relative overflow-hidden rounded-3xl border border-[#5b9cf6]/20 bg-[#0d1628] p-10">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(91,156,246,0.12)_0%,transparent_70%)]" />
+      <div className="pointer-events-none absolute -bottom-16 -left-16 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(200,168,255,0.08)_0%,transparent_70%)]" />
+
+      <div className="mb-7">
+        <div className="mb-3 flex items-center gap-2 ">
+          <div className="h-1.5 w-1.5 rounded-full bg-[#5b9cf6] " />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5b9cf6]">
+            Register with DevRank
+          </span>
+        </div>
+        <h2 className="mb-2 text-2xl font-bold leading-tight tracking-tight text-white sm:text-[26px]">
           Become an early access partner
         </h2>
-        <p className="mt-3 text-sm leading-6 text-slate-400">
-          Fill in your details below and start using the candidate scoring dashboard with the same polished style as the rest of the site.
+        <p className="text-[13px] leading-relaxed text-slate-500">
+          Fill in your details and start scoring candidates by real technical signals.
         </p>
       </div>
 
-      <form className="grid gap-6" onSubmit={handleSubmit}>
-        <div className="grid gap-2 text-sm text-slate-200">
-          <label className="font-medium">Full name</label>
+      <form className="grid gap-4" onSubmit={handleSubmit}>
+
+        <div className="grid gap-1.5">
+          <label className="text-xs font-medium text-slate-400">Full name</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder="Jane Doe"
-            className="rounded-2xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-[#5b9cf6] focus:ring-2 focus:ring-[#5b9cf6]/20"
+            className="w-full rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-[#5b9cf6]/60 focus:ring-2 focus:ring-[#5b9cf6]/20"
           />
         </div>
 
-        <div className="grid gap-2 text-sm text-slate-200">
-          <label className="font-medium">Email address</label>
+
+        <div className="grid gap-1.5">
+          <label className="text-xs font-medium text-slate-400">Email address</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="jane@example.com"
-            className="rounded-2xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-[#5b9cf6] focus:ring-2 focus:ring-[#5b9cf6]/20"
+            className="w-full rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-[#5b9cf6]/60 focus:ring-2 focus:ring-[#5b9cf6]/20"
           />
         </div>
 
-        <div className="grid gap-2 text-sm text-slate-200">
-          <label className="font-medium">Password</label>
+        <div className="grid gap-1.5">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-medium text-slate-400">Password</label>
+            <span className="text-[11px] text-[#5b9cf6]">8+ characters</span>
+          </div>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="rounded-2xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-[#5b9cf6] focus:ring-2 focus:ring-[#5b9cf6]/20"
+            className="w-full rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-[#5b9cf6]/60 focus:ring-2 focus:ring-[#5b9cf6]/20"
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="grid gap-2 text-sm text-slate-200">
-            <label className="font-medium">Company</label>
+          <div className="grid gap-1.5">
+            <label className="text-xs font-medium text-slate-400">Company</label>
             <input
               type="text"
               name="company"
               value={formData.company}
               onChange={handleChange}
               placeholder="Acme Corp"
-              className="rounded-2xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-[#5b9cf6] focus:ring-2 focus:ring-[#5b9cf6]/20"
+              className="w-full rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-[#5b9cf6]/60 focus:ring-2 focus:ring-[#5b9cf6]/20"
             />
           </div>
-
-          <div className="grid gap-2 text-sm text-slate-200">
-            <label className="font-medium">Role</label>
+          <div className="grid gap-1.5">
+            <label className="text-xs font-medium text-slate-400">Role</label>
             <input
               type="text"
               name="role"
               value={formData.role}
               onChange={handleChange}
               placeholder="HR Manager"
-              className="rounded-2xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-[#5b9cf6] focus:ring-2 focus:ring-[#5b9cf6]/20"
+              className="w-full rounded-2xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-[#5b9cf6]/60 focus:ring-2 focus:ring-[#5b9cf6]/20"
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-slate-500">
-            All fields are optional for now.
+        <div className="my-1 h-px bg-white/[0.07]" />
+
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-[11px] leading-relaxed text-slate-600">
+            All fields optional.<br />No spam, ever.
           </p>
           <button
             type="submit"
-            className="inline-flex items-center justify-center rounded-2xl bg-linear-to-r from-[#5b9cf6] via-[#6ea8ff] to-[#c8a8ff] px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_16px_40px_rgba(91,156,246,0.25)] transition hover:brightness-105"
+            className="inline-flex items-center justify-center rounded-2xl bg-linear-to-r from-[#5b9cf6] via-[#6ea8ff] to-[#c8a8ff] px-6 py-3 text-sm font-semibold text-[#0d1628] shadow-[0_16px_40px_rgba(91,156,246,0.25)] transition hover:brightness-105"
           >
-            Create account
+            Create account →
           </button>
         </div>
 
         {status ? (
-          <p className="mt-2 text-sm text-slate-300">{status}</p>
+          <p className="text-center text-sm text-slate-300">{status}</p>
         ) : null}
       </form>
-    </section>
+
+      <p className="mt-5 text-center text-[11px] text-slate-600">
+        Already have an account?{" "}
+        <span className="cursor-pointer text-[#5b9cf6]">Sign in</span>
+      </p>
+    </div>
   );
 };
