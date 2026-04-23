@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { motion } from "motion/react";
 import { navItems, navItemVariants } from "../model/HeaderData";
-import { RegistrationModal } from "@/src/shared/ui/RegistrationModal";
 
 export const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <header>
@@ -41,18 +38,8 @@ export const Header = () => {
               {label}
             </motion.a>
           ))}
-          <motion.button
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center h-9 px-5 rounded-xl bg-blue-500/10 border border-blue-500/25 text-blue-300 text-sm font-medium hover:bg-blue-500/20 hover:border-blue-500/40 transition-all cursor-pointer"
-            variants={navItemVariants}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Request demo
-          </motion.button>
         </motion.div>
       </motion.nav>
-      <RegistrationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
   );
 };

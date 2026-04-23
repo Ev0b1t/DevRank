@@ -1,42 +1,16 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/src/shared/store/authStore";
 import {
   cardVariants,
   HeroCards,
   heroVariants,
   itemVariants,
 } from "../model/HeroData";
-import { RegistrationModal } from "@/src/shared/ui/RegistrationModal";
+import { MainButton } from "@/src/shared/ui/MainButton";
 
 export const HeroContent = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const user = useAuthStore((state) => state.user);
 
-  const handleDashboardClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (user) {
-      navigate("/candidates");
-    } else {
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleAnalyzeCVClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (user) {
-      navigate("/upload");
-    } else {
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleRequestDemoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsModalOpen(true);
-  };
   return (
     <motion.section
       className="relative flex flex-col items-center px-10 pt-40 pb-32 overflow-hidden text-center"
@@ -82,29 +56,11 @@ export const HeroContent = () => {
           className="flex flex-wrap justify-center gap-3"
           variants={itemVariants}
         >
-          <motion.button
-            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl no-underline font-semibold text-base transition-all duration-200 bg-blue-500 text-slate-900 hover:bg-blue-400 shadow-[0_8px_32px_rgba(91,156,246,0.35)] hover:shadow-[0_12px_40px_rgba(91,156,246,0.5)] border-none cursor-pointer"
-            onClick={handleRequestDemoClick}
-            whileHover={{ y: -2, scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 260, damping: 22 }}
-          >
-            Request demo
-          </motion.button>
-
-          <motion.button
-            className="inline-flex items-center justify-center h-13 px-8 rounded-2xl font-semibold text-base transition-all duration-200 border border-white/10 bg-white/5 text-slate-100 hover:bg-white/10 hover:border-white/20 cursor-pointer"
-            onClick={handleDashboardClick}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 240, damping: 20 }}
-          >
-            Dashboard
-          </motion.button>
+          <MainButton text="Dashboard" onClick={() => navigate("/candidates")} />
 
           <motion.button
             className="inline-flex items-center justify-center h-13 px-8 rounded-2xl font-semibold text-base transition-all duration-200 border border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-500 cursor-pointer"
-            onClick={handleAnalyzeCVClick}
+            onClick={() => navigate("/upload")}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 240, damping: 20 }}
@@ -146,7 +102,6 @@ export const HeroContent = () => {
           ))}
         </motion.div>
       </div>
-      <RegistrationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.section>
   );
 };

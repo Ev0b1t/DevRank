@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { motion } from "motion/react";
 import { fadeIn, fadeUp, lineReveal, Section } from "@/src/shared/Animations";
 import { MainButton } from "@/src/shared/ui/MainButton";
-import { RegistrationModal } from "@/src/shared/ui/RegistrationModal";
+import { useNavigate } from "react-router-dom";
 
 export const CTA = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate()
 
   return (
     <Section id="contact" className="py-32 px-10 border-t border-white/6 relative overflow-hidden">
@@ -44,10 +44,9 @@ export const CTA = () => {
           decisions.
         </motion.p>
 
-        <MainButton text="Get early access" onClick={() => setIsModalOpen(true)} />
+        <MainButton text="Get early access" onClick={() => navigate('/upload')} />
 
       </div>
-      <RegistrationModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </Section>
   );
 };
