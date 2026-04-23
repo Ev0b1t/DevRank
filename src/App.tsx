@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UploadPage from "./pages/UploadPage/UploadPage";
 import CandidatesPage from "./pages/CandidatesPage/CandidatesPage";
@@ -5,8 +6,13 @@ import CandidateDetailsPage from "./pages/CandidateDetailPage/CandidateDetailsPa
 import "./App.css";
 import { Landing } from "./pages/Landing/Landing";
 import ProtectedRoute from "./shared/ProtectedRoute";
+import { useAuthStore } from "./shared/store/authStore";
 
 function App() {
+  useEffect(() => {
+    useAuthStore.getState().initialize();
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
