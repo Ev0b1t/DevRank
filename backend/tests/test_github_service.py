@@ -55,6 +55,22 @@ class _MockClient:
             return _MockResponse({"content": "IyBSRUFETUU=\n", "encoding": "base64"})  # README
         if "/repos/example-user/repo-1/contents/app/main.py" in url:
             return _MockResponse({"content": "cHJpbnQoJ2hlbGxvJyk=\n", "encoding": "base64"})  # print('hello')
+        if "/repos/example-user/repo-1/commits" in url:
+            return _MockResponse(
+                [
+                    {"commit": {"message": "feat: add parser"}},
+                    {"commit": {"message": "fix(api): handle timeout"}},
+                    {"commit": {"message": "update stuff"}},
+                ]
+            )
+        if "/repos/example-user/repo-1/pulls" in url:
+            return _MockResponse(
+                [
+                    {"state": "closed", "merged_at": "2025-01-10T00:00:00Z"},
+                    {"state": "closed", "merged_at": None},
+                    {"state": "open", "merged_at": None},
+                ]
+            )
         return _MockResponse({})
 
 
@@ -64,6 +80,7 @@ async def test_get_user_data_extracts_username_and_maps_repos(monkeypatch):
     monkeypatch.setattr("app.services.github_service.httpx.AsyncClient", lambda: mock_client)
     monkeypatch.setattr("app.services.github_service.settings.MAX_GITHUB_REPOS", 6)
     monkeypatch.setattr("app.services.github_service.settings.GITHUB_FOCUS_REPOS", 3)
+    monkeypatch.setattr("app.services.github_service.settings.ENABLE_EXTERNAL_CODE_SIGNALS", False)
 
     service = GitHubService()
     result = await service.get_user_data("https://github.com/example-user/")
@@ -75,6 +92,10 @@ async def test_get_user_data_extracts_username_and_maps_repos(monkeypatch):
     assert result["repos"][0]["has_tests"] is True
     assert result["repos"][0]["has_ci"] is True
     assert len(result["repos"][0]["code_samples"]) >= 1
+    assert result["repos"][0]["commit_signals"]["recent_commit_count"] == 3
+    assert result["repos"][0]["pr_signals"]["recent_pr_count"] == 3
+    assert result["repos"][0]["pr_signals"]["merged_pr_count"] == 1
+    assert result["repos"][0]["external_quality_signals"] == {}
 
 
 def test_select_focus_repos_prioritizes_popularity_and_recent_activity():

@@ -3,6 +3,7 @@ import base64
 from typing import Any, Dict, List, Optional
 from app.core.config import settings
 from loguru import logger
+from app.services.external_code_signals_service import ExternalCodeSignalsService
 
 class GitHubService:
     def __init__(self):
@@ -11,6 +12,7 @@ class GitHubService:
         }
         if settings.GITHUB_TOKEN:
             self.headers["Authorization"] = f"token {settings.GITHUB_TOKEN}"
+        self.external_signals_service = ExternalCodeSignalsService()
 
     async def get_user_data(self, github_url: str) -> Dict[str, Any]:
         # Extract username from URL: https://github.com/username
@@ -40,6 +42,13 @@ class GitHubService:
                 readme_excerpt = await self._fetch_readme_excerpt(client, owner, repo_name)
                 code_paths = self._pick_code_sample_paths(tree_paths, settings.MAX_CODE_SAMPLES_PER_REPO)
                 code_samples = await self._fetch_code_samples(client, owner, repo_name, code_paths)
+                commit_signals = await self._fetch_commit_signals(client, owner, repo_name)
+                pr_signals = await self._fetch_pr_signals(client, owner, repo_name)
+                external_quality_signals = {}
+                if settings.ENABLE_EXTERNAL_CODE_SIGNALS:
+                    external_quality_signals = await self.external_signals_service.fetch_repo_signals(
+                        client, owner, repo_name
+                    )
 
                 processed_repos.append({
                     "name": repo_name,
@@ -50,6 +59,9 @@ class GitHubService:
                     "languages_full": languages_full,
                     "readme_excerpt": readme_excerpt,
                     "code_samples": code_samples,
+                    "commit_signals": commit_signals,
+                    "pr_signals": pr_signals,
+                    "external_quality_signals": external_quality_signals,
                     **signals,
                 })
 
@@ -163,3 +175,44 @@ class GitHubService:
             except Exception as exc:
                 logger.debug("Failed to fetch code sample {}/{} {}: {}", owner, repo, path, exc)
         return samples
+
+    async def _fetch_commit_signals(self, client: httpx.AsyncClient, owner: str, repo: str) -> Dict[str, Any]:
+        try:
+            url = f"https://api.github.com/repos/{owner}/{repo}/commits?per_page={settings.MAX_COMMITS_ANALYZED}"
+            response = await client.get(url, headers=self.headers)
+            response.raise_for_status()
+            commits = response.json()
+            messages = [item.get("commit", {}).get("message", "") for item in commits]
+            non_empty = [m for m in messages if m]
+            conventional = sum(
+                1
+                for m in non_empty
+                if m.startswith(("feat:", "fix:", "chore:", "docs:", "refactor:", "test:", "perf:", "build:"))
+            )
+            return {
+                "recent_commit_count": len(commits),
+                "conventional_commit_ratio": round((conventional / len(non_empty)), 2) if non_empty else 0.0,
+                "avg_commit_message_length": round(sum(len(m) for m in non_empty) / len(non_empty), 2)
+                if non_empty
+                else 0.0,
+            }
+        except Exception as exc:
+            logger.debug("Commit signals fetch failed for {}/{}: {}", owner, repo, exc)
+            return {"recent_commit_count": 0, "conventional_commit_ratio": 0.0, "avg_commit_message_length": 0.0}
+
+    async def _fetch_pr_signals(self, client: httpx.AsyncClient, owner: str, repo: str) -> Dict[str, Any]:
+        try:
+            url = f"https://api.github.com/repos/{owner}/{repo}/pulls?state=all&per_page={settings.MAX_PRS_ANALYZED}"
+            response = await client.get(url, headers=self.headers)
+            response.raise_for_status()
+            prs = response.json()
+            merged = sum(1 for pr in prs if pr.get("merged_at"))
+            closed = sum(1 for pr in prs if pr.get("state") == "closed")
+            return {
+                "recent_pr_count": len(prs),
+                "merged_pr_count": merged,
+                "closed_pr_count": closed,
+            }
+        except Exception as exc:
+            logger.debug("PR signals fetch failed for {}/{}: {}", owner, repo, exc)
+            return {"recent_pr_count": 0, "merged_pr_count": 0, "closed_pr_count": 0}

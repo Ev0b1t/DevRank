@@ -19,7 +19,13 @@ class Settings(BaseSettings):
     MAX_README_CHARS: int = 1000
     MAX_CODE_SAMPLE_CHARS: int = 700
     MAX_CODE_SAMPLES_PER_REPO: int = 2
+    MAX_COMMITS_ANALYZED: int = 20
+    MAX_PRS_ANALYZED: int = 20
     MAX_GITHUB_PAYLOAD_CHARS: int = 12000
+    ENABLE_EXTERNAL_CODE_SIGNALS: bool = False
+    SONAR_TOKEN: str = ""
+    SONAR_ORGANIZATION: str = ""
+    SONAR_PROJECT_KEY_TEMPLATE: str = "{owner}_{repo}"
     LOG_LEVEL: str = "INFO"
     LOG_DIR: str = "logs"
     LOG_FILE: str = "devrank.log"
