@@ -48,5 +48,3 @@ backend/*.sqlite3
 backend/.env
 backend/.env.*
 !backend/.env.example
-/.venv/
-.venv/
