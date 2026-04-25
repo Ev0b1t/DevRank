@@ -14,7 +14,11 @@ class Settings(BaseSettings):
     MAX_CV_CHARS: int = 8000
     MAX_VACANCY_CHARS: int = 2000
     MAX_GITHUB_REPOS: int = 6
+    GITHUB_FOCUS_REPOS: int = 3
     MAX_REPO_DESC_CHARS: int = 280
+    MAX_README_CHARS: int = 1000
+    MAX_CODE_SAMPLE_CHARS: int = 700
+    MAX_CODE_SAMPLES_PER_REPO: int = 2
     MAX_GITHUB_PAYLOAD_CHARS: int = 12000
     LOG_LEVEL: str = "INFO"
     LOG_DIR: str = "logs"
