@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "SmartHire AI (DevRank)"
     VERSION: str = "0.2.0"
 
-    DB_URL: str = "sqlite+aiosqlite:///./devrank.db"
+    DB_URL: str = "postgresql+asyncpg://devrank_user:devrank_password@localhost:5432/devrank_db"
 
     LLM_PROVIDER: str = "gemini"
     GEMINI_API_KEY: str = ""
