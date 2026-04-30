@@ -8,10 +8,14 @@ from app.services.external_code_signals_service import ExternalCodeSignalsServic
 class GitHubService:
     def __init__(self):
         self.headers = {
-            "Accept": "application/vnd.github.v3+json"
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"
         }
         if settings.GITHUB_TOKEN:
-            self.headers["Authorization"] = f"token {settings.GITHUB_TOKEN}"
+            self.headers["Authorization"] = f"Bearer {settings.GITHUB_TOKEN}"
+            logger.debug("GitHub token configured (first 10 chars: {}...)", settings.GITHUB_TOKEN[:10])
+        else:
+            logger.warning("No GITHUB_TOKEN found in settings - GitHub API requests may be rate-limited")
         self.external_signals_service = ExternalCodeSignalsService()
 
     async def get_user_data(self, github_url: str) -> Dict[str, Any]:
